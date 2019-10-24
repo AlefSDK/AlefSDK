@@ -7,13 +7,34 @@
 //
 
 import UIKit
-//import Firebase
 import FirebaseCore
 import FirebaseMessaging
 import AWSSNS
 import AWSCognitoIdentityProvider
+import NotificationBannerSwift
 
 public class AlefSDK: NSObject {
+    private var config = Config()
+    
+    private var buildType: Int?
+    
+    public var setBuildType: Int? {
+        set {
+            if buildType == nil {
+                if let newValue = newValue {
+                    if newValue > 2 || newValue < 0 {
+                        buildType = 2
+                    } else {
+                        buildType = newValue
+                    }
+                }
+            }
+        }
+        
+        get {
+            return buildType
+        }
+    }
     
     private static var sharedAlefSDK: AlefSDK = {
         let sdk = AlefSDK()
@@ -33,8 +54,7 @@ public class AlefSDK: NSObject {
     }
     
     private func awsInit() {
-        print (Environment.identityPoolId)
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .APSouth1, identityPoolId: Environment.identityPoolId)
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .APSouth1, identityPoolId: config.identityPool)
         
         let defaultServiceConfiguration = AWSServiceConfiguration(region: .APSouth1, credentialsProvider: credentialsProvider)
         AWSServiceManager.default()?.defaultServiceConfiguration = defaultServiceConfiguration
@@ -67,8 +87,8 @@ public class AlefSDK: NSObject {
     }
     
     func handle(_ userInfo: [AnyHashable: Any], background: Bool) {
-        print (userInfo)
         if let rmnLink = userInfo["rmn_link"] as? String {
+            
             if let currentTop = UIApplication.shared.topMostViewController() {
                 currentTop.present(UINavigationController(rootViewController: AlefSDKPlayerViewController(urlString: rmnLink, titleString: nil)), animated: true, completion: nil)
             }
@@ -102,7 +122,7 @@ extension AlefSDK {
             
             let platformEndpointRequest = AWSSNSCreatePlatformEndpointInput()
             platformEndpointRequest?.token = deviceToken
-            platformEndpointRequest?.platformApplicationArn = Environment.platformApplicationArn
+            platformEndpointRequest?.platformApplicationArn = config.platformApplicationArn[buildType ?? 2]
             platformEndpointRequest?.customUserData = customUserData
             
             snsClient.createPlatformEndpoint(platformEndpointRequest!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in

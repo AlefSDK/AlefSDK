@@ -8,12 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		396C0F04F0ADA8E11808AC75 /* Pods_AlefSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71F9E8D8B40E68B94E662860 /* Pods_AlefSDK.framework */; };
+		64007CBA2361983800F011D9 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64007CB92361983800F011D9 /* Config.swift */; };
 		6406318D23614DE500B04659 /* AlefSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 6406318B23614DE500B04659 /* AlefSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6406319423614E0D00B04659 /* AlefSDK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6406319323614E0D00B04659 /* AlefSDK.swift */; };
-		6406319A23614E4D00B04659 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6406319623614E4D00B04659 /* Environment.swift */; };
-		6406319B23614E4D00B04659 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6406319723614E4D00B04659 /* Development.xcconfig */; };
-		6406319C23614E4D00B04659 /* Staging.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6406319823614E4D00B04659 /* Staging.xcconfig */; };
-		6406319D23614E4D00B04659 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6406319923614E4D00B04659 /* Production.xcconfig */; };
 		6406319F23614EAA00B04659 /* AlefSDKPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6406319E23614EAA00B04659 /* AlefSDKPlayerViewController.swift */; };
 		640631A723614ED000B04659 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640631A623614ED000B04659 /* NotificationService.swift */; };
 		640631B323614EE500B04659 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 640631B223614EE500B04659 /* UserNotifications.framework */; };
@@ -24,14 +21,11 @@
 
 /* Begin PBXFileReference section */
 		0DC0792FEEF158132492068E /* Pods-AlefSDK.development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlefSDK.development.xcconfig"; path = "Target Support Files/Pods-AlefSDK/Pods-AlefSDK.development.xcconfig"; sourceTree = "<group>"; };
+		64007CB92361983800F011D9 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		6406318823614DE500B04659 /* AlefSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlefSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6406318B23614DE500B04659 /* AlefSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlefSDK.h; sourceTree = "<group>"; };
 		6406318C23614DE500B04659 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6406319323614E0D00B04659 /* AlefSDK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlefSDK.swift; sourceTree = "<group>"; };
-		6406319623614E4D00B04659 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
-		6406319723614E4D00B04659 /* Development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
-		6406319823614E4D00B04659 /* Staging.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Staging.xcconfig; sourceTree = "<group>"; };
-		6406319923614E4D00B04659 /* Production.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		6406319E23614EAA00B04659 /* AlefSDKPlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlefSDKPlayerViewController.swift; sourceTree = "<group>"; };
 		640631A423614ED000B04659 /* Service.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Service.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		640631A623614ED000B04659 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -110,24 +104,13 @@
 		6406318A23614DE500B04659 /* AlefSDK */ = {
 			isa = PBXGroup;
 			children = (
-				6406319523614E4D00B04659 /* Configs */,
 				6406318B23614DE500B04659 /* AlefSDK.h */,
 				6406318C23614DE500B04659 /* Info.plist */,
+				64007CB92361983800F011D9 /* Config.swift */,
 				6406319323614E0D00B04659 /* AlefSDK.swift */,
 				6406319E23614EAA00B04659 /* AlefSDKPlayerViewController.swift */,
 			);
 			path = AlefSDK;
-			sourceTree = "<group>";
-		};
-		6406319523614E4D00B04659 /* Configs */ = {
-			isa = PBXGroup;
-			children = (
-				6406319623614E4D00B04659 /* Environment.swift */,
-				6406319723614E4D00B04659 /* Development.xcconfig */,
-				6406319823614E4D00B04659 /* Staging.xcconfig */,
-				6406319923614E4D00B04659 /* Production.xcconfig */,
-			);
-			path = Configs;
 			sourceTree = "<group>";
 		};
 		640631A523614ED000B04659 /* Service */ = {
@@ -273,9 +256,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6406319C23614E4D00B04659 /* Staging.xcconfig in Resources */,
-				6406319B23614E4D00B04659 /* Development.xcconfig in Resources */,
-				6406319D23614E4D00B04659 /* Production.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,7 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6406319423614E0D00B04659 /* AlefSDK.swift in Sources */,
-				6406319A23614E4D00B04659 /* Environment.swift in Sources */,
+				64007CBA2361983800F011D9 /* Config.swift in Sources */,
 				6406319F23614EAA00B04659 /* AlefSDKPlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,7 +344,6 @@
 /* Begin XCBuildConfiguration section */
 		6406318F23614DE500B04659 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6406319923614E4D00B04659 /* Production.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -422,7 +401,7 @@
 		};
 		6406319223614DE500B04659 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6406319923614E4D00B04659 /* Production.xcconfig */;
+			baseConfigurationReference = 751564E916D66C597968E7C0 /* Pods-AlefSDK.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -489,7 +468,6 @@
 		};
 		640631C023614FD100B04659 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6406319823614E4D00B04659 /* Staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -547,7 +525,7 @@
 		};
 		640631C123614FD100B04659 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6406319823614E4D00B04659 /* Staging.xcconfig */;
+			baseConfigurationReference = D85D9D6DC18F9DD8259A2712 /* Pods-AlefSDK.staging.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -614,7 +592,6 @@
 		};
 		640631C423614FD300B04659 /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6406319723614E4D00B04659 /* Development.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -672,7 +649,7 @@
 		};
 		640631C523614FD300B04659 /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6406319723614E4D00B04659 /* Development.xcconfig */;
+			baseConfigurationReference = 0DC0792FEEF158132492068E /* Pods-AlefSDK.development.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;

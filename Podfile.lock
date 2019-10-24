@@ -57,17 +57,23 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.3.1):
     - GoogleUtilities/Logger
+  - MarqueeLabel (4.0.0)
   - nanopb (0.3.904):
     - nanopb/decode (= 0.3.904)
     - nanopb/encode (= 0.3.904)
   - nanopb/decode (0.3.904)
   - nanopb/encode (0.3.904)
+  - NotificationBannerSwift (3.0.0):
+    - MarqueeLabel (~> 4.0.0)
+    - SnapKit (~> 5.0.0)
   - Protobuf (3.10.0)
+  - SnapKit (5.0.1)
 
 DEPENDENCIES:
   - AWSCognitoIdentityProvider
   - AWSSNS
   - Firebase/Messaging
+  - NotificationBannerSwift (~> 3.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -85,8 +91,11 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
+    - MarqueeLabel
     - nanopb
+    - NotificationBannerSwift
     - Protobuf
+    - SnapKit
 
 SPEC CHECKSUMS:
   AWSCognitoIdentityProvider: 1df180f85e314365dfded2c46c460bc7afb08b4b
@@ -103,9 +112,12 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 166f9b9f82cbf60a204e8fe2daa9db3e3ec1fb15
   GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
+  MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   nanopb: 06f6030d554e6473f5e172460173fcf80f5548f4
+  NotificationBannerSwift: 842401d30f5c36e4f2eafc152824566f6b3c1bb5
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 436945951aa576c3b8fcfee291bfbc78db900df0
+PODFILE CHECKSUM: c71d0d0b8c496d9bf3f2134b03720cff6a31a965
 
 COCOAPODS: 1.7.5

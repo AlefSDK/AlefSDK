@@ -10,5 +10,6 @@ target 'AlefSDK' do
   pod 'Firebase/Messaging'
   pod 'AWSSNS'
   pod 'AWSCognitoIdentityProvider'
+  pod 'NotificationBannerSwift', '~> 3.0.0'
 
 end
