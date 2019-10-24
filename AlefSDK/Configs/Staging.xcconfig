@@ -1,0 +1,16 @@
+//
+//  Test.xcconfig
+//  FELA
+//
+//  Created by Lam Ngo (Work) on 10/23/19.
+//  Copyright © 2019 AlefEdge, Inc. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Pods/Target Support Files/Pods-AlefSDK/Pods-AlefSDK.staging.xcconfig"
+
+PLATFORM_APPLICATION_ARN = arn:aws:sns:ap-south-1:182890061560:app/GCM/RMN-Test
+ANALYTICS_URL = https://analytics.testalef.net
+IDENTITY_POOL_ID = ap-south-1:736953f0-9057-49f3-8e83-aac681ddf899

@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 //! Project version number for AlefSDK.
 FOUNDATION_EXPORT double AlefSDKVersionNumber;
 

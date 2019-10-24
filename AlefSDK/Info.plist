@@ -16,7 +16,13 @@
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>IDENTITY_POOL_ID</key>
+	<string>$(IDENTITY_POOL_ID)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ANALYTICS_URL</key>
+	<string>$(ANALYTICS_URL)</string>
+	<key>PLATFORM_APPLICATION_ARN</key>
+	<string>$(PLATFORM_APPLICATION_ARN)</string>
 </dict>
 </plist>
