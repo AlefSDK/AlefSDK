@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class AlefSDKPlayerViewController: UIViewController {
+class AlefSDKPlayerViewController: UIViewController, WKNavigationDelegate {
     var urlString: String?
     var titleString: String?
     let webView = WKWebView()
@@ -23,6 +23,10 @@ class AlefSDKPlayerViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print ("Alef Player Web Deallocated")
     }
     
     override func viewDidLoad() {
@@ -39,11 +43,23 @@ class AlefSDKPlayerViewController: UIViewController {
             navigationController.navigationBar.barTintColor = UIColor(patternImage: navImage!)
         }
         
+        webView.navigationDelegate = self
+        webView.allowsBackForwardNavigationGestures = true
+        
         if let urlString = urlString {
             webView.load(urlString)
         }
         
         title = titleString ?? "Alef SDK"
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        let cookieScript = "document.cookie;"
+        webView.evaluateJavaScript(cookieScript) { (response, error) in
+            if let response = response as? String {
+                AlefSDK.shared().getCookie(cookies: response)
+            }
+        }
     }
     
     @objc func dismissFunc() {
@@ -57,6 +73,7 @@ class AlefSDKPlayerViewController: UIViewController {
     func load(_ urlString: String) {
         webView.load(urlString)
     }
+    
 }
 
 extension WKWebView {

@@ -48,9 +48,9 @@ public class AlefSDK: NSObject {
         return sharedAlefSDK
     }
     
-    public func initialize() {
+    public func initialize(options: FirebaseOptions) {
         awsInit()
-        firebaseInit()
+        firebaseInit(options: options)
     }
     
     private func awsInit() {
@@ -60,9 +60,17 @@ public class AlefSDK: NSObject {
         AWSServiceManager.default()?.defaultServiceConfiguration = defaultServiceConfiguration
     }
     
-    private func firebaseInit() {
-        FirebaseApp.configure()
+    private func firebaseInit(options: FirebaseOptions) {
+        if FirebaseApp.app() != nil {
+            FirebaseApp.configure(name: "alef", options: options)
+        } else {
+            FirebaseApp.configure(options: options)
+        }
         
+        Messaging.messaging().delegate = self
+    }
+    
+    public func requestUserNotification() {
         if #available(iOS 10.0, *) {
           // For iOS 10 display notification (sent via APNS)
             UNUserNotificationCenter.current().delegate = self
@@ -70,11 +78,13 @@ public class AlefSDK: NSObject {
             let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
             UNUserNotificationCenter.current().requestAuthorization(
                 options: authOptions,
-                completionHandler: {_, _ in })
+                completionHandler: {_, _ in
+                    Messaging.messaging().isAutoInitEnabled = true
+            })
             
-            let openAction = UNNotificationAction(identifier: "OpenNotification", title: NSLocalizedString("Abrir", comment: ""), options: UNNotificationActionOptions.foreground)
-            let defaultCategory = UNNotificationCategory(identifier: "CustomPush", actions: [openAction], intentIdentifiers: [], options: [])
-            UNUserNotificationCenter.current().setNotificationCategories(Set([defaultCategory]))
+//            let openAction = UNNotificationAction(identifier: "OpenNotification", title: NSLocalizedString("Abrir", comment: ""), options: UNNotificationActionOptions.foreground)
+//            let defaultCategory = UNNotificationCategory(identifier: "CustomPush", actions: [openAction], intentIdentifiers: [], options: [])
+//            UNUserNotificationCenter.current().setNotificationCategories(Set([defaultCategory]))
         } else {
             let settings: UIUserNotificationSettings =
                 UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
@@ -82,30 +92,95 @@ public class AlefSDK: NSObject {
         }
 
         UIApplication.shared.registerForRemoteNotifications()
-        
-        Messaging.messaging().delegate = self
     }
     
     func handle(_ userInfo: [AnyHashable: Any], background: Bool) {
         if let rmnLink = userInfo["rmn_link"] as? String {
-            
-            if let currentTop = UIApplication.shared.topMostViewController() {
-                currentTop.present(UINavigationController(rootViewController: AlefSDKPlayerViewController(urlString: rmnLink, titleString: nil)), animated: true, completion: nil)
+            if let aps = userInfo["aps"] as? [String: Any], let alert = aps["alert"] as? [String: String] {
+                let banner = NotificationBanner(title: alert["title"], subtitle: alert["body"], style: .success)
+                banner.show()
+                
+                banner.onTap = {
+                    if let currentTop = UIApplication.shared.topMostViewController() {
+                        currentTop.present(UINavigationController(rootViewController: AlefSDKPlayerViewController(urlString: rmnLink, titleString: nil)), animated: true, completion: nil)
+                    }
+                }
             }
+        }
+    }
+}
+
+extension AlefSDK {
+    func getCookie(cookies: String) {
+        let cookieList = cookies.split(separator: ";")
+        
+        for cookie in cookieList {
+            if cookie.contains("uuid") {
+                let uuid = cookie.split(separator: "=")[1]
+                syncUUID(uuid: String(uuid))
+                return
+            }
+        }
+    }
+    
+    func syncUUID(uuid: String?) {
+        if let uuid = uuid, let endpointArn = UserDefaults.standard.string(forKey: "endpointArnForSNS") {
+            let parameters = ["userID" : uuid, "endpointArn" : endpointArn]
+            
+            if let url = URL(string: config.analyticsURL[buildType ?? 2]) {
+                let session = URLSession.shared
+                
+                var request = URLRequest(url: url)
+                request.httpMethod = "POST"
+                
+                do {
+                    request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+                } catch let error {
+                    print (error.localizedDescription)
+                    
+                    return
+                }
+                
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                let task = session.dataTask(with: request, completionHandler: { data, response ,error in
+                    guard error == nil else {
+                        print (error!.localizedDescription)
+                        return
+                    }
+                    
+                    guard data != nil else {
+                        return
+                    }
+                })
+                
+                task.resume()
+            }
+            
+            
         }
     }
 }
 
 extension AlefSDK: MessagingDelegate {
     public func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
-        register(customUserData: "iOS", deviceToken: fcmToken)
+        if let currentToken = UserDefaults.standard.string(forKey: "alefFcmToken") {
+            print (currentToken)
+            if currentToken != fcmToken {
+                unregisterCurrent()
+                register(customUserData: "iOS", deviceToken: fcmToken)
+            }
+        } else {
+            unregisterCurrent()
+            register(customUserData: "iOS", deviceToken: fcmToken)
+        }
     }
 }
 
 extension AlefSDK: UNUserNotificationCenterDelegate {
     @available(iOS 10.0, *)
     public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print ("helloooooooooooo")
         handle(notification.request.content.userInfo, background: false)
     }
     
@@ -134,6 +209,7 @@ extension AlefSDK {
                     if let endpointArnForSNS = createEndpointResponse.endpointArn {
                         print("endpointArn: \(endpointArnForSNS)")
                         UserDefaults.standard.set(endpointArnForSNS, forKey: "endpointArnForSNS")
+                        UserDefaults.standard.set(deviceToken, forKey: "alefFcmToken")
                     }
                 }
                 
